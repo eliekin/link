@@ -17,22 +17,23 @@ class LocationService with ChangeNotifier {
     var response = await http.get(Uri.parse(url));
 
     var json = convert.jsonDecode(response.body);
-    try {
-       var results = {
-        'distance': json['routes'][0]['legs'][0]['distance']['text'],
-        'duration': json['routes'][0]['legs'][0]['duration']['text'],
-        'bounds_ne': json['routes'][0]['bounds']['northeast'],
-        'bounds_sw': json['routes'][0]['bounds']['southwest'],
-        'start_location': json['routes'][0]['legs'][0]['start_location'],
-        'end_location': json['routes'][0]['legs'][0]['end_location'],
-        'polyline': json['routes'][0]['overview_polyline']['points'],
-        'polyline_decoded': PolylinePoints().decodePolyline(
-          json['routes'][0]['overview_polyline']['points'],
-        )
-      };
-      return results;
-    } catch (_) {
-      return json['status'];
-    }
+
+    String statusCode = json['status'];
+
+    var results = {
+       statusCode : json['status'],
+      'distance': json['routes'][0]['legs'][0]['distance']['text'],
+      'duration': json['routes'][0]['legs'][0]['duration']['text'],
+      'bounds_ne': json['routes'][0]['bounds']['northeast'],
+      'bounds_sw': json['routes'][0]['bounds']['southwest'],
+      'start_location': json['routes'][0]['legs'][0]['start_location'],
+      'end_location': json['routes'][0]['legs'][0]['end_location'],
+      'polyline': json['routes'][0]['overview_polyline']['points'],
+      'polyline_decoded': PolylinePoints().decodePolyline(
+        json['routes'][0]['overview_polyline']['points'],
+      )
+    };
+
+    return results;
   }
 }

@@ -38,6 +38,7 @@ class _activeMapState extends State<activeMap> {
   Set<Polyline> _polyline = Set<Polyline>();
 
   int _polylineIdcounter = 1;
+  final _formKey = GlobalKey<FormState>();
 
   void _setPolyline(List<PointLatLng> points) {
     _polyline.clear();
@@ -264,40 +265,38 @@ class _activeMapState extends State<activeMap> {
                       color: Colors.black45,
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return;
-                              }
-                            },
-                            style: const TextStyle(color: Colors.white),
-                            cursorColor: Colors.green[400],
-                            decoration: const InputDecoration(
+                    child: Form(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              style: const TextStyle(color: Colors.white),
+                              cursorColor: Colors.green[400],
+                              decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
-                                hintText: 'Search destination',
+                                hintText: 'Search for a destination',
                                 hintStyle: TextStyle(
                                   color: Colors.white,
                                   letterSpacing: 2,
-                                ),),
-                            controller: _destinationController,
-                            textCapitalization: TextCapitalization.words,
+                                ),
+                              ),
+                              controller: _destinationController,
+                              textCapitalization: TextCapitalization.words,
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: searchingPlaceButton,
-                          icon: const Icon(
-                            Icons.search_rounded,
-                            color: Colors.green,
+                          IconButton(
+                            onPressed: searchingPlaceButton,
+                            icon: const Icon(
+                              Icons.search_rounded,
+                              color: Colors.green,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -312,68 +311,44 @@ class _activeMapState extends State<activeMap> {
                         markers: markers,
                         polylines: _polyline,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 15,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0, vertical: 4.0),
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  categoryMapMarker(
-                                      'Restaurant',
-                                      Icons.restaurant_menu_rounded,
-                                      Colors.orange),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker('Hotel',
-                                      Icons.local_hotel_rounded, Colors.green),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker('Supermarket',
-                                      Icons.shopping_cart_rounded, Colors.cyan),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker(
-                                      'Hopital',
-                                      Icons.local_hospital_rounded,
-                                      Colors.blue),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker(
-                                      'Gas Station',
-                                      Icons.local_gas_station_rounded,
-                                      Colors.yellow),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker('Garage',
-                                      Icons.garage_rounded, Colors.red),
-                                  SizedBoxConstant(),
-                                  categoryMapMarker('My Location',
-                                      Icons.place_rounded, Colors.pink),
-                                ],
-                              ),
-                            ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 15,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0, vertical: 4.0),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              categoryMapMarker('My Location',
+                                  Icons.place_rounded, Colors.pink),
+                              SizedBoxConstant(),
+                              categoryMapMarker(
+                                  'Restaurant',
+                                  Icons.restaurant_menu_rounded,
+                                  Colors.orange),
+                              SizedBoxConstant(),
+                              categoryMapMarker('Hotel',
+                                  Icons.local_hotel_rounded, Colors.green),
+                              SizedBoxConstant(),
+                              categoryMapMarker('Supermarket',
+                                  Icons.shopping_cart_rounded, Colors.cyan),
+                              SizedBoxConstant(),
+                              categoryMapMarker(
+                                  'Hopital',
+                                  Icons.local_hospital_rounded,
+                                  Colors.blue),
+                              SizedBoxConstant(),
+                              categoryMapMarker(
+                                  'Gas Station',
+                                  Icons.local_gas_station_rounded,
+                                  Colors.yellow),
+                              SizedBoxConstant(),
+                              categoryMapMarker('Garage',
+                                  Icons.garage_rounded, Colors.red),
+                            ],
                           ),
-                         const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.black26.withOpacity(0.7),
-                            ),
-                            margin: EdgeInsets.only(left: 7),
-                            width: 130,
-                            height: 80,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                timeAndDistance(Icons.timer_rounded),
-                                timeAndDistance(Icons.map),
-                              ],
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                       Align(
                         alignment: Alignment.bottomLeft,
@@ -390,13 +365,15 @@ class _activeMapState extends State<activeMap> {
                                 color: Colors.green,
                               ),
                               onPressed: () {
-                                // setState(() {
-                                //   markers.clear();
-                                //   _initialCameraPosition = CameraPosition(
-                                //     target: LatLng(0.347596, 32.582520),
-                                //     zoom: 15,
-                                //   );
-                                // });
+                                setState(() {
+                                  CameraPosition _initialCameraPosition =
+                                      CameraPosition(
+                                    target: LatLng(0.347596, 32.582520),
+                                    zoom: 15,
+                                  );
+                                  markers.clear();
+                                  _polyline.clear();
+                                });
                               },
                             ),
                           ),
@@ -413,7 +390,7 @@ class _activeMapState extends State<activeMap> {
                           elevation: 2.5,
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: InkWell(
+                            child: GestureDetector(
                               onTap: () async {
                                 setState(() {
                                   spinnerLoading = true;
@@ -430,16 +407,16 @@ class _activeMapState extends State<activeMap> {
                                   _initialCameraPosition = CameraPosition(
                                       target:
                                           LatLng(user.latitude, user.longitude),
-                                      zoom: 20);
+                                      zoom: 15);
                                 });
                               },
                               child: Row(
                                 children: [
-                                 const Icon(
+                                  const Icon(
                                     Icons.person_pin_circle,
                                     color: Colors.green,
                                   ),
-                                 const Text(
+                                  const Text(
                                     'My current location',
                                     style: TextStyle(
                                         color: Colors.green,
@@ -469,6 +446,7 @@ class _activeMapState extends State<activeMap> {
     var userLng = userLocation.longitude;
     var directions = await LocationService()
         .getDirection(LatLng(userLat, userLng), _destinationController.text);
+    print(directions['statusCode']);
     await add();
     setState(() {
       spinnerLoading = false;
@@ -481,26 +459,32 @@ class _activeMapState extends State<activeMap> {
     _setPolyline(directions['polyline_decoded']);
   }
 
+  // Padding timeAndDistance(IconData icon) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Row(
+  //       children: [
+  //         IconButton(
+  //           icon: Icon(icon, color: Colors.green),
+  //           onPressed: () async {
+  //             var userLocation = await UserCurrentLocation().returnPosition();
+  //             var userLat = userLocation.latitude;
+  //             var userLng = userLocation.longitude;
+  //             var directions = await LocationService().getDirection(
+  //                 LatLng(userLat, userLng), _destinationController.text);
 
-
-  Padding timeAndDistance(IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.green,
-          ),
-          SizedBoxConstant(),
-         const Text(
-            'text',
-            style: TextStyle(color: Colors.white),
-          )
-        ],
-      ),
-    );
-  }
+  //             return directions['duration'];
+  //           },
+  //         ),
+  //         SizedBoxConstant(),
+  //         Text(
+  //           'toString()',
+  //           style: TextStyle(color: Colors.white),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   SizedBox SizedBoxConstant() {
     return SizedBox(
@@ -534,12 +518,4 @@ class _activeMapState extends State<activeMap> {
           CameraPosition(target: LatLng(lat, lng), zoom: 15);
     });
   }
-
-// Future<String> getDistance() async {
-//     var userLocation = await UserCurrentLocation().returnPosition();
-//     var userLat = userLocation.latitude;
-//     var userLng = userLocation.longitude;
-//     var directions = await LocationService()
-//         .getDirection(LatLng(userLat, userLng), _destinationController.text);
-//   }
 }
