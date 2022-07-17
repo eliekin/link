@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:project/provider/place_details.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import './details.dart';
+import 'package:project/widgets/bottom_sheet_details.dart';
 
 class bottomsheet extends StatelessWidget {
   String? title;
   String? address;
-  String? phone_number;
-  String? business_status;
+  String? phoneNumber;
+  String? businessStatus;
   String? rating;
 
-  bottomsheet(this.title, this.address, this.business_status, this.rating,
-      this.phone_number);
+  bottomsheet(this.title, this.address, this.businessStatus, this.rating,
+      this.phoneNumber, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 10.0,
         right: 10,
         top: 20,
@@ -29,41 +27,41 @@ class bottomsheet extends StatelessWidget {
           Center(
             child: Text(
               title!,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
             ),
           ),
-          SizedBox(
+         const SizedBox(
             height: 20,
           ),
-          BottomSheetItem(
+          BottomSheetDetails(
             title: 'Address',
             value: '${address}',
           ),
           ConstVerticalHeight(),
-          BottomSheetItem(
+          BottomSheetDetails(
             title: 'Phone Number',
-            value: '${phone_number}',
+            value: '${phoneNumber}',
           ),
           ConstVerticalHeight(),
-          BottomSheetItem(
+          BottomSheetDetails(
             title: 'Opening Now',
-            value: '${business_status}',
+            value: '${businessStatus}',
           ),
           ConstVerticalHeight(),
-          BottomSheetItem(
+          BottomSheetDetails(
             title: 'Rating',
             value: '${rating}',
           ),
           ConstVerticalHeight(),
           ElevatedButton(
-              style: ButtonStyle(),
+              style:const ButtonStyle(),
               onPressed: () async {
-                launchUrl(Uri.parse('tel://$phone_number'));
+                launchUrl(Uri.parse('tel://$phoneNumber'));
               },
-              child: Text('Call'))
+              child: const Text('Call'))
         ],
       ),
     );

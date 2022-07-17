@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BottomSheetItem extends StatelessWidget {
+class BottomSheetDetails extends StatelessWidget {
    String title;
    String value;
 
-  BottomSheetItem({
+  BottomSheetDetails({Key? key, 
     required this.value,
     required this.title,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,13 @@ class BottomSheetItem extends StatelessWidget {
             style: style,
           ),
         ),
-        SizedBox(
+       const SizedBox(
           width: 10,
         ),
         Expanded(
           flex: 2,
           child: Text(
+            // ignore: unnecessary_string_interpolations
             "${value}",
             style: style,
           ),

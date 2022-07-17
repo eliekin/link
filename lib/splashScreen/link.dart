@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:project/screens/tabs_screen.dart';
+import 'package:project/screens/map_screen.dart';
+
 
 class LinkLogo extends StatefulWidget {
-  LinkLogo({Key? key}) : super(key: key);
+const  LinkLogo({Key? key}) : super(key: key);
 
   @override
   State<LinkLogo> createState() => _LinkLogoState();
@@ -14,23 +15,22 @@ class _LinkLogoState extends State<LinkLogo> {
 
      @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       (() => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => tabsScreen(),
+              builder: (context) =>const MapScreen(),
             ),
           )),
     );
   } 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: const Text(
+        child: Text(
           'Link',
           style: TextStyle(
               fontSize: 50,

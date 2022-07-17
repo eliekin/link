@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:project/screens/link.dart';
+import 'package:project/splashScreen/link.dart';
 
 class SplasScreen extends StatefulWidget {
   const SplasScreen({Key? key}) : super(key: key);
@@ -14,10 +14,9 @@ class SplasScreen extends StatefulWidget {
 class _SplasScreenState extends State<SplasScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(
-      Duration(seconds: 3),
+      const Duration(seconds: 3),
       (() => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -31,7 +30,7 @@ class _SplasScreenState extends State<SplasScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color:Colors.white,
+        color: Colors.white,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

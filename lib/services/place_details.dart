@@ -3,7 +3,7 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:project/provider/userCurentLoaction.dart';
+
 
 class PlaceDetails with ChangeNotifier {
   final String key = 'AIzaSyBj5ps7ECrlgqimZ7JPHJ_X7WcciazZafI';
